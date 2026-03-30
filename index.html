@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>RainBet – Virtual Casino</title>
 
 <!-- PWA / iOS meta -->
@@ -53,9 +53,9 @@ body{
   overflow:hidden;
   font-family:'Inter',sans-serif;
   background:var(--bg);color:var(--text);font-size:14px;
-  /* Safe area padding on the sides only — top/bottom handled by components */
   padding-left:env(safe-area-inset-left);
   padding-right:env(safe-area-inset-right);
+  -webkit-tap-highlight-color:transparent; /* kills blue flash on iOS tap */
 }
 ::-webkit-scrollbar{width:3px;}
 ::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:3px;}
@@ -375,6 +375,7 @@ body{
   background:var(--bg3);cursor:pointer;transition:all .13s;
   font-family:'Inter',sans-serif;color:var(--text2);font-size:.7rem;font-weight:600;
   min-width:84px;user-select:none;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
 }
 .abtn:hover{background:var(--bg4);border-color:var(--border2);color:var(--text);}
 .abtn-ico{font-size:.88rem;}
@@ -397,6 +398,7 @@ body{
   width:38px;height:38px;border-radius:50%;border:1px solid var(--border2);
   background:var(--bg3);display:flex;align-items:center;justify-content:center;
   font-size:.85rem;cursor:pointer;flex-shrink:0;transition:all .12s;color:var(--text2);
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
 }
 .chip-reset:hover{background:var(--bg4);color:var(--text);}
 .chip{
@@ -405,7 +407,9 @@ body{
   font-size:.7rem;font-weight:800;cursor:pointer;flex-shrink:0;
   border:3px solid rgba(255,255,255,.22);
   box-shadow:0 3px 8px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.18);
-  transition:all .15s;user-select:none;color:#fff;position:relative;
+  transition:transform .1s,box-shadow .1s;user-select:none;color:#fff;position:relative;
+  touch-action:manipulation; /* kills double-tap zoom */
+  -webkit-tap-highlight-color:transparent;
 }
 .chip::before{content:'';position:absolute;inset:3px;border-radius:50%;border:2px dashed rgba(255,255,255,.18);}
 .chip:hover{transform:translateY(-3px) scale(1.1);}
@@ -423,7 +427,7 @@ body{
 }
 .bi-sym{font-size:.8rem;color:var(--text3);font-weight:500;}
 .bi-in{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:.9rem;font-weight:700;font-family:'Inter',sans-serif;font-variant-numeric:tabular-nums;min-width:60px;}
-.qb{height:32px;padding:0 9px;border-radius:6px;border:none;background:var(--bg4);color:var(--text2);font-size:.72rem;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;transition:all .12s;}
+.qb{height:32px;padding:0 9px;border-radius:6px;border:none;background:var(--bg4);color:var(--text2);font-size:.72rem;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;transition:all .12s;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
 .qb:hover{background:var(--bg5);color:var(--text);}
 .qb:disabled{opacity:.3;cursor:not-allowed;}
 
@@ -434,6 +438,7 @@ body{
   font-size:.86rem;font-weight:800;font-family:'Inter',sans-serif;
   cursor:pointer;transition:all .15s;
   box-shadow:0 2px 12px rgba(59,130,246,.35);flex-shrink:0;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
 }
 .btn-place:hover{filter:brightness(1.1);transform:translateY(-1px);}
 .btn-place:disabled{opacity:.3;cursor:not-allowed;transform:none;}
@@ -464,6 +469,7 @@ body{
   color:var(--text3);font-size:.58rem;font-weight:700;letter-spacing:.04em;
   text-transform:uppercase;transition:all .15s;border:none;background:none;
   font-family:'Inter',sans-serif;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
 }
 .mnav-btn.active{color:var(--accent2);}
 .mnav-btn .mnav-ico{font-size:1.3rem;line-height:1;}
@@ -501,22 +507,26 @@ body{
   .card-big{font-size:1rem;}
   .cards-row{gap:5px;min-height:80px;}
 
-  /* ── BJ bottom bar: scrollable chip row ── */
+  /* ── Action buttons (hit/stand/double) ── */
   .abtn{min-width:56px;padding:6px 8px;font-size:.63rem;}
   .abtn-ico{font-size:.75rem;}
-  .chip{width:34px;height:34px;font-size:.6rem;}
-  .chip::before{inset:2px;}
-  .chips-bet-row{padding:5px 10px 8px;gap:5px;}
-  .bet-group{min-width:110px;max-width:200px;}
-  .bi-in{font-size:.82rem;}
-  .btn-place{padding:0 14px;font-size:.78rem;height:38px;}
-  .btn-auto{display:none;}  /* hide auto on mobile to save space */
-  .qb{padding:0 7px;font-size:.65rem;height:28px;}
   .action-row{padding:6px 10px 2px;gap:5px;}
+
+  /* ── Chips row ── */
+  .chip{width:36px;height:36px;font-size:.62rem;}
+  .chip::before{inset:2px;}
+  .chips-bet-row{padding:6px 10px 4px;gap:6px;}
+
+  /* ── Bet amount + deal row ── */
+  .bet-action-row{padding:0 10px 10px;gap:6px;}
+  .bet-group{min-width:0;max-width:none;flex:1;}
+  .bi-in{font-size:.82rem;}
+  .btn-place{padding:0 14px;font-size:.8rem;height:40px;flex-shrink:0;white-space:nowrap;}
+  .btn-auto{display:none;}
+  .qb{padding:0 6px;font-size:.65rem;height:28px;}
 
   /* ── Crash ── */
   .crash-players{display:none;}
-  .crash-bottom .chips-bet-row{padding:5px 10px 8px;}
   .crash-stats{display:none;}
 
   /* ── Plinko ── */
@@ -768,6 +778,28 @@ body{
 .plinko-stats{display:flex;gap:16px;margin-left:auto;}
 .plinko-stats .cs-item{text-align:right;}
 
+
+/* ── TWO-ROW BET BAR ──────────────────── */
+.bet-bar{
+  display:flex;
+  flex-direction:column;
+}
+.bet-action-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:0 16px 10px;
+}
+.bet-action-row .bet-group{
+  flex:1;
+  min-width:0;     /* allow shrink below min-width */
+  max-width:none;  /* fill available space */
+}
+/* chips row inside bet-bar: no bottom padding — action row handles it */
+.bet-bar .chips-bet-row{
+  padding-bottom:4px;
+}
+
 </style>
 </head>
 <body>
@@ -926,24 +958,30 @@ body{
           <div class="abtn abtn-hit"    id="abtn-hit" onclick="hit()"><span class="abtn-ico">👆</span>Hit</div>
           <div class="abtn abtn-stand"  id="abtn-std" onclick="stand()"><span class="abtn-ico">✋</span>Stand</div>
         </div>
-        <div class="chips-bet-row">
-          <div class="chip-reset" onclick="clearBet()">↺</div>
-          <div class="chip c1"   onclick="addBet(1)">1</div>
-          <div class="chip c5"   onclick="addBet(5)">5</div>
-          <div class="chip c25"  onclick="addBet(25)">25</div>
-          <div class="chip c100" onclick="addBet(100)">100</div>
-          <div class="chip c200" onclick="addBet(200)">200</div>
-          <div class="bet-group">
-            <span class="bi-sym">$</span>
-            <input class="bi-in" id="bet-in" type="text" value="0" readonly>
-            <div style="display:flex;gap:2px;">
-              <button class="qb" id="qb-half" onclick="adjBet(.5)">1/2</button>
-              <button class="qb" id="qb-2x"   onclick="adjBet(2)">2x</button>
-              <button class="qb" id="qb-max"   onclick="maxBet()">Max</button>
-            </div>
+        <div class="bet-bar">
+          <!-- Row 1: chips -->
+          <div class="chips-bet-row">
+            <div class="chip-reset" onclick="clearBet()">↺</div>
+            <div class="chip c1"   onclick="addBet(1)">1</div>
+            <div class="chip c5"   onclick="addBet(5)">5</div>
+            <div class="chip c25"  onclick="addBet(25)">25</div>
+            <div class="chip c100" onclick="addBet(100)">100</div>
+            <div class="chip c200" onclick="addBet(200)">200</div>
           </div>
-          <button class="btn-place" id="btn-place" onclick="deal()">Place Bet</button>
-          <button class="btn-auto" id="btn-auto" onclick="autoDeal()" disabled title="Repeat last bet">↺ Auto</button>
+          <!-- Row 2: amount + deal -->
+          <div class="bet-action-row">
+            <div class="bet-group">
+              <span class="bi-sym">$</span>
+              <input class="bi-in" id="bet-in" type="text" value="0" readonly>
+              <div style="display:flex;gap:2px;">
+                <button class="qb" id="qb-half" onclick="adjBet(.5)">½</button>
+                <button class="qb" id="qb-2x"   onclick="adjBet(2)">2×</button>
+                <button class="qb" id="qb-max"   onclick="maxBet()">Max</button>
+              </div>
+            </div>
+            <button class="btn-place" id="btn-place" onclick="deal()">Place Bet</button>
+            <button class="btn-auto" id="btn-auto" onclick="autoDeal()" disabled title="Repeat last bet">↺ Auto</button>
+          </div>
         </div>
       </div>
     </div>
@@ -984,36 +1022,34 @@ body{
       </div>
 
       <div class="bj-bottom">
-        <div class="action-row" id="crash-cashout-row" style="display:none;">
+        <div class="bet-action-row" id="crash-cashout-row" style="display:none;justify-content:center;">
           <div class="abtn" style="border-color:rgba(34,197,94,.3);color:#4ade80;background:rgba(34,197,94,.08);min-width:160px;" id="crash-cashout-abtn" onclick="crashAction()">
             <span class="abtn-ico">💰</span>Cash Out
           </div>
         </div>
-        <div class="chips-bet-row" id="crash-bet-row">
-          <div class="chip-reset" onclick="crashClearBet()">↺</div>
-          <div class="chip c1"   onclick="crashAddBet(1)">1</div>
-          <div class="chip c5"   onclick="crashAddBet(5)">5</div>
-          <div class="chip c25"  onclick="crashAddBet(25)">25</div>
-          <div class="chip c100" onclick="crashAddBet(100)">100</div>
-          <div class="chip c200" onclick="crashAddBet(200)">200</div>
-          <div class="bet-group">
-            <span class="bi-sym">$</span>
-            <input class="bi-in" id="crash-bet-in" type="text" value="0" readonly>
-            <div style="display:flex;gap:2px;">
-              <button class="qb" id="crash-qb-half" onclick="crashAdjBet(.5)">1/2</button>
-              <button class="qb" id="crash-qb-2x"   onclick="crashAdjBet(2)">2x</button>
-              <button class="qb" id="crash-qb-max"   onclick="crashMaxBet()">Max</button>
-            </div>
+        <div class="bet-bar" id="crash-bet-row">
+          <div class="chips-bet-row">
+            <div class="chip-reset" onclick="crashClearBet()">↺</div>
+            <div class="chip c1"   onclick="crashAddBet(1)">1</div>
+            <div class="chip c5"   onclick="crashAddBet(5)">5</div>
+            <div class="chip c25"  onclick="crashAddBet(25)">25</div>
+            <div class="chip c100" onclick="crashAddBet(100)">100</div>
+            <div class="chip c200" onclick="crashAddBet(200)">200</div>
           </div>
-          <button class="btn-place" id="crash-action-btn" onclick="crashAction()">Place Bet</button>
-          <div class="crash-stats" style="margin-left:8px;">
-            <div class="cs-item">
-              <div class="cs-lbl">Wagered</div>
-              <div class="cs-val" id="crash-wag">$0</div>
+          <div class="bet-action-row">
+            <div class="bet-group">
+              <span class="bi-sym">$</span>
+              <input class="bi-in" id="crash-bet-in" type="text" value="0" readonly>
+              <div style="display:flex;gap:2px;">
+                <button class="qb" id="crash-qb-half" onclick="crashAdjBet(.5)">½</button>
+                <button class="qb" id="crash-qb-2x"   onclick="crashAdjBet(2)">2×</button>
+                <button class="qb" id="crash-qb-max"   onclick="crashMaxBet()">Max</button>
+              </div>
             </div>
-            <div class="cs-item">
-              <div class="cs-lbl">Best</div>
-              <div class="cs-val" id="crash-best" style="color:var(--gold)">–</div>
+            <button class="btn-place" id="crash-action-btn" onclick="crashAction()">Place Bet</button>
+            <div class="crash-stats">
+              <div class="cs-item"><div class="cs-lbl">Wagered</div><div class="cs-val" id="crash-wag">$0</div></div>
+              <div class="cs-item"><div class="cs-lbl">Best</div><div class="cs-val" id="crash-best" style="color:var(--gold)">–</div></div>
             </div>
           </div>
         </div>
@@ -1059,31 +1095,29 @@ body{
       </div>
 
       <div class="bj-bottom">
-        <div class="chips-bet-row">
-          <div class="chip-reset" onclick="plinkoClearBet()">↺</div>
-          <div class="chip c1"   onclick="plinkoAddBet(1)">1</div>
-          <div class="chip c5"   onclick="plinkoAddBet(5)">5</div>
-          <div class="chip c25"  onclick="plinkoAddBet(25)">25</div>
-          <div class="chip c100" onclick="plinkoAddBet(100)">100</div>
-          <div class="chip c200" onclick="plinkoAddBet(200)">200</div>
-          <div class="bet-group">
-            <span class="bi-sym">$</span>
-            <input class="bi-in" id="plinko-bet-in" type="text" value="0" readonly>
-            <div style="display:flex;gap:2px;">
-              <button class="qb" onclick="plinkoAdjBet(.5)">1/2</button>
-              <button class="qb" onclick="plinkoAdjBet(2)">2x</button>
-              <button class="qb" onclick="plinkoMaxBet()">Max</button>
-            </div>
+        <div class="bet-bar">
+          <div class="chips-bet-row">
+            <div class="chip-reset" onclick="plinkoClearBet()">↺</div>
+            <div class="chip c1"   onclick="plinkoAddBet(1)">1</div>
+            <div class="chip c5"   onclick="plinkoAddBet(5)">5</div>
+            <div class="chip c25"  onclick="plinkoAddBet(25)">25</div>
+            <div class="chip c100" onclick="plinkoAddBet(100)">100</div>
+            <div class="chip c200" onclick="plinkoAddBet(200)">200</div>
           </div>
-          <button class="btn-place" id="btn-drop" onclick="plinkoDrop()">Drop Ball</button>
-          <div class="plinko-stats" style="margin-left:8px;">
-            <div class="cs-item">
-              <div class="cs-lbl">Last Win</div>
-              <div class="cs-val" id="plinko-last" style="color:var(--gold)">–</div>
+          <div class="bet-action-row">
+            <div class="bet-group">
+              <span class="bi-sym">$</span>
+              <input class="bi-in" id="plinko-bet-in" type="text" value="0" readonly>
+              <div style="display:flex;gap:2px;">
+                <button class="qb" onclick="plinkoAdjBet(.5)">½</button>
+                <button class="qb" onclick="plinkoAdjBet(2)">2×</button>
+                <button class="qb" onclick="plinkoMaxBet()">Max</button>
+              </div>
             </div>
-            <div class="cs-item">
-              <div class="cs-lbl">Profit</div>
-              <div class="cs-val" id="plinko-profit">$0</div>
+            <button class="btn-place" id="btn-drop" onclick="plinkoDrop()">Drop Ball</button>
+            <div class="plinko-stats">
+              <div class="cs-item"><div class="cs-lbl">Last Win</div><div class="cs-val" id="plinko-last" style="color:var(--gold)">–</div></div>
+              <div class="cs-item"><div class="cs-lbl">Profit</div><div class="cs-val" id="plinko-profit">$0</div></div>
             </div>
           </div>
         </div>
@@ -1290,7 +1324,7 @@ function sfxBonus(){
 // ════════════════════════════════════════
 //  STATE
 // ════════════════════════════════════════
-let bal   = +(localStorage.getItem('rb_bal')  || 1000);
+let bal   = Math.max(1, +(localStorage.getItem('rb_bal') || 0)) || 1000;
 let wag   = +(localStorage.getItem('rb_wag')  || 0);
 let lbDay = localStorage.getItem('rb_lb') || '';
 let stats = JSON.parse(localStorage.getItem('rb_stats') || '{"w":0,"l":0,"p":0,"bj":0,"str":0,"best":0}');
@@ -1517,10 +1551,11 @@ function endRound(r){
   refreshUI(); refreshHist(); save(); recordBalance(); setAutoBtn('idle');
 
   if(bal <= 0){
-    bal = 250; showToast('💸 Broke! Here\'s $250'); save(); refreshUI();
+    bal = 1000; showToast('💸 Broke! Balance reset to $1,000'); save(); refreshUI();
   }
 
-  bet = 0; refreshBet();
+  // Restore bet to pre-double amount so player can re-deal without re-entering
+  bet = lastBet; refreshBet();
   setTimeout(()=>{ phase='idle'; setCtrl('idle'); }, 500);
 }
 
@@ -1619,6 +1654,8 @@ function goTab(id){
 }
 
 // ── INIT ────────────────────────────────
+// Clear corrupted save if balance ended up at 0
+if(bal <= 0){ bal = 1000; save(); }
 buildDeck();
 refreshUI();
 refreshHist();
@@ -2403,7 +2440,6 @@ const PlinkoGame = (function(){
       if(amt <= 0){ showToast('Place a bet first!'); return; }
       if(amt > bal){ showToast('Not enough balance'); return; }
       bal -= amt;
-      plinkoBet = 0; refreshPlinkoBet();
       refreshUI();
       recordBalance();
       dropping = true;
