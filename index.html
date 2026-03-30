@@ -46,19 +46,31 @@
   --hh: 56px;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-html,body{height:100%;overflow:hidden;}
-/* iOS safe area */
-body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
+/* Use dvh (dynamic viewport height) so iOS Safari URL bar is counted */
+html{height:100%;height:100dvh;}
+body{
+  height:100%;height:100dvh;
+  overflow:hidden;
+  font-family:'Inter',sans-serif;
+  background:var(--bg);color:var(--text);font-size:14px;
+  /* Safe area padding on the sides only — top/bottom handled by components */
+  padding-left:env(safe-area-inset-left);
+  padding-right:env(safe-area-inset-right);
+}
 ::-webkit-scrollbar{width:3px;}
 ::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:3px;}
 
 /* ── TOPBAR ─────────────────────────── */
 .topbar{
   position:fixed;top:0;left:0;right:0;z-index:300;
-  height:var(--hh);background:var(--bg2);border-bottom:1px solid var(--border);
-  display:flex;align-items:center;
+  /* Expand topbar to cover the notch/dynamic island */
+  padding-top:env(safe-area-inset-top);
+  height:calc(var(--hh) + env(safe-area-inset-top));
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:flex-end;
 }
+/* All topbar children sit at the bottom of the expanded bar */
+.topbar > *{margin-bottom:0;flex-shrink:0;}
 .tb-logo{
   width:var(--sw);flex-shrink:0;
   display:flex;align-items:center;gap:10px;padding:0 18px;height:100%;
@@ -114,7 +126,11 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 }
 
 /* ── LAYOUT ─────────────────────────── */
-.layout{display:flex;margin-top:var(--hh);height:calc(100vh - var(--hh));}
+.layout{
+  display:flex;
+  margin-top:calc(var(--hh) + env(safe-area-inset-top));
+  height:calc(100dvh - var(--hh) - env(safe-area-inset-top));
+}
 
 /* ── SIDEBAR ────────────────────────── */
 .sidebar{
@@ -145,9 +161,17 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .ssv{font-size:.73rem;font-weight:700;font-variant-numeric:tabular-nums;}
 
 /* ── MAIN ───────────────────────────── */
-.main{flex:1;overflow-y:auto;overflow-x:hidden;position:relative;}
+.main{
+  flex:1;
+  overflow-y:auto;
+  overflow-x:hidden;
+  position:relative;
+  -webkit-overflow-scrolling:touch;
+}
 .panel{display:none;animation:fu .22s ease;}
 .panel.active{display:block;}
+/* Game panels use flex, need to fill height when active */
+#panel-bj.active,#panel-crash.active,#panel-plinko.active{display:flex;}
 @keyframes fu{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
 
 /* ── LOBBY ──────────────────────────── */
@@ -221,7 +245,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .fl{color:var(--red);}
 
 /* ── BLACKJACK PANEL ────────────────── */
-#panel-bj{display:none;flex-direction:column;height:100%;overflow:hidden;}
+#panel-bj{display:none;flex-direction:column;overflow:hidden;}
 #panel-bj.active{display:flex;}
 
 .bj-bar{
@@ -238,9 +262,11 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .fairplay svg{width:13px;height:13px;color:var(--green);}
 
 /* TABLE */
+.bj-table-fill{flex:1;overflow:hidden;display:flex;align-items:center;justify-content:center;}
 .bj-table{
   flex:1;display:flex;align-items:center;justify-content:center;
   position:relative;overflow:hidden;
+  min-height:0;/* allow flex shrink */
   background:radial-gradient(ellipse at 50% 55%,#16304a 0%,#0f2236 40%,var(--bg) 100%);
   padding-bottom:16px;
 }
@@ -333,7 +359,11 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .hdot.bj{background:var(--gold);}
 
 /* BOTTOM BAR */
-.bj-bottom{flex-shrink:0;background:var(--bg2);border-top:1px solid var(--border);}
+.bj-bottom{
+  flex-shrink:0;
+  background:var(--bg2);border-top:1px solid var(--border);
+  overflow:hidden; /* prevent inner overflow bleeding */
+}
 
 .action-row{
   display:flex;align-items:center;justify-content:center;gap:6px;
@@ -357,7 +387,10 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 
 .chips-bet-row{
   display:flex;align-items:center;gap:6px;
-  padding:6px 16px 10px;overflow-x:auto;
+  padding:6px 16px 10px;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  flex-wrap:nowrap;
 }
 .chips-bet-row::-webkit-scrollbar{display:none;}
 .chip-reset{
@@ -421,7 +454,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
   display:none;
   position:fixed;bottom:0;left:0;right:0;z-index:400;
   background:var(--bg2);border-top:1px solid var(--border);
-  padding:6px 0 max(6px, env(safe-area-inset-bottom));
+  padding:8px 0 max(8px, env(safe-area-inset-bottom));
+  /* Total height ~54px + safe area */
 }
 .mobile-nav-row{display:flex;justify-content:space-around;align-items:center;}
 .mnav-btn{
@@ -435,38 +469,79 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .mnav-btn .mnav-ico{font-size:1.3rem;line-height:1;}
 
 @media(max-width:700px){
+  /* ── Hide desktop sidebar ── */
   .sidebar{display:none;}
   :root{--sw:0px;}
-  .tb-search,.cst{display:none;}
+
+  /* ── Hide desktop-only topbar items ── */
+  .tb-search,.cst,.tb-icon,.btn-bonus{display:none;}
+
+  /* ── Show mobile bottom nav ── */
   .mobile-nav{display:block;}
-  /* push content above bottom nav */
-  .main{padding-bottom:68px;}
-  #panel-bj{padding-bottom:68px;}
-  #panel-crash{padding-bottom:68px;}
-  #panel-plinko{padding-bottom:68px;}
-  /* smaller cards on mobile */
-  .card{width:58px;height:80px;}
-  .card-r{font-size:.72rem;}
-  .card-big{font-size:1.1rem;}
-  /* compact BJ bottom bar */
-  .abtn{min-width:58px;padding:6px 8px;font-size:.65rem;}
-  .chip{width:36px;height:36px;font-size:.62rem;}
-  .bet-group{min-width:120px;}
-  .btn-place{padding:0 16px;font-size:.8rem;}
-  .btn-auto{padding:0 10px;font-size:.76rem;}
-  /* topbar compact */
-  .btn-bonus{padding:0 10px;font-size:.72rem;}
-  .wallet-pill{padding:0 10px;}
-  .tb-icon{display:none;}
-  /* crash bottom */
-  .crash-bottom{flex-wrap:wrap;gap:6px;padding:8px 10px;}
-  .crash-stats{margin-left:0;}
+
+  /* ── Layout: subtract mobile nav height from available space ── */
+  :root{ --mnav-h: calc(54px + env(safe-area-inset-bottom)); }
+  .layout{
+    height:calc(100dvh - var(--hh) - env(safe-area-inset-top) - var(--mnav-h));
+  }
+
+  /* ── Lobby: scrolls naturally inside .main ── */
+  .main{padding-bottom:0;}
+
+  /* ── Game panels: fill the layout height exactly ── */
+  #panel-bj,#panel-crash,#panel-plinko{
+    height:calc(100dvh - var(--hh) - env(safe-area-inset-top) - var(--mnav-h));
+    max-height:calc(100dvh - var(--hh) - env(safe-area-inset-top) - var(--mnav-h));
+  }
+
+  /* ── BJ table: shrink to fit ── */
+  .bj-table{padding:14px 12px;}
+  .card{width:56px;height:78px;}
+  .card-r{font-size:.7rem;}
+  .card-big{font-size:1rem;}
+  .cards-row{gap:5px;min-height:80px;}
+
+  /* ── BJ bottom bar: scrollable chip row ── */
+  .abtn{min-width:56px;padding:6px 8px;font-size:.63rem;}
+  .abtn-ico{font-size:.75rem;}
+  .chip{width:34px;height:34px;font-size:.6rem;}
+  .chip::before{inset:2px;}
+  .chips-bet-row{padding:5px 10px 8px;gap:5px;}
+  .bet-group{min-width:110px;max-width:200px;}
+  .bi-in{font-size:.82rem;}
+  .btn-place{padding:0 14px;font-size:.78rem;height:38px;}
+  .btn-auto{display:none;}  /* hide auto on mobile to save space */
+  .qb{padding:0 7px;font-size:.65rem;height:28px;}
+  .action-row{padding:6px 10px 2px;gap:5px;}
+
+  /* ── Crash ── */
   .crash-players{display:none;}
-  /* hero */
-  .hero{padding:18px 16px 16px;}
-  .hero-h1{font-size:1.3rem;}
-  /* graph hidden on mobile to save space */
+  .crash-bottom .chips-bet-row{padding:5px 10px 8px;}
+  .crash-stats{display:none;}
+
+  /* ── Plinko ── */
+  .plinko-stats{display:none;}
+  .plinko-risk{top:8px;left:8px;}
+  .plinko-rows{top:8px;right:8px;}
+
+  /* ── Topbar compact ── */
+  .wallet-pill{padding:0 10px;}
+  .wp-amt{font-size:.8rem;}
+
+  /* ── Hero ── */
+  .hero{padding:16px 14px 14px;}
+  .hero-h1{font-size:1.25rem;}
+  .hero-sub{font-size:.78rem;}
+
+  /* ── Feed ── */
+  .feed-row{max-height:160px;}
+
+  /* ── Graph hidden ── */
   .graph-box{display:none;}
+
+  /* ── Featured card ── */
+  .featured-card{flex-direction:column;max-width:100%;}
+  .fc-art{width:100%;height:80px;}
 }
 
 /* ── AUTO-DEAL BUTTON ─────────────────── */
@@ -491,7 +566,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 #session-graph{width:100%;height:70px;display:block;}
 
 /* ── CRASH GAME ───────────────────────── */
-#panel-crash{display:none;flex-direction:column;height:100%;overflow:hidden;}
+#panel-crash{display:none;flex-direction:column;overflow:hidden;}
 #panel-crash.active{display:flex;}
 
 .crash-bar{
@@ -504,6 +579,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 
 .crash-main{
   flex:1;display:flex;align-items:stretch;overflow:hidden;
+  min-height:0;
 }
 .crash-canvas-wrap{
   flex:1;position:relative;background:var(--bg);overflow:hidden;
@@ -607,7 +683,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .cp-lost{color:var(--red);}
 
 /* ── PLINKO ────────────────────────────── */
-#panel-plinko{display:none;flex-direction:column;height:100%;overflow:hidden;}
+#panel-plinko{display:none;flex-direction:column;overflow:hidden;}
 #panel-plinko.active{display:flex;}
 
 .plinko-bar{
@@ -617,7 +693,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 }
 .plinko-bar-l{display:flex;align-items:center;gap:10px;}
 
-.plinko-main{flex:1;display:flex;align-items:stretch;overflow:hidden;position:relative;}
+.plinko-main{flex:1;display:flex;align-items:stretch;overflow:hidden;position:relative;min-height:0;}
 #plinko-canvas{display:block;background:var(--bg);}
 
 /* Risk selector */
