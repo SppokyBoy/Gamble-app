@@ -800,6 +800,182 @@ body{
   padding-bottom:4px;
 }
 
+
+/* ═══ REDESIGNED LOBBY ═══════════════════ */
+.lobby-section{padding:18px 20px 14px;}
+.lobby-section-hd{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:14px;flex-wrap:wrap;gap:8px;
+}
+.lobby-section-title{font-size:.95rem;font-weight:800;letter-spacing:-.01em;}
+.lobby-filter-pills{display:flex;gap:5px;}
+.lfp{
+  padding:5px 14px;border-radius:20px;font-size:.74rem;font-weight:600;
+  background:var(--bg3);border:1px solid var(--border);color:var(--text2);
+  cursor:pointer;transition:all .12s;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+}
+.lfp:hover{border-color:var(--border2);color:var(--text);}
+.lfp.active{background:rgba(59,130,246,.15);border-color:var(--accent);color:#93c5fd;}
+
+.lobby-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+  gap:12px;
+}
+.lgame-card{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:12px;overflow:hidden;cursor:pointer;
+  transition:transform .18s,border-color .18s,box-shadow .18s;
+  position:relative;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+}
+.lgame-card:hover{
+  transform:translateY(-4px);border-color:var(--border2);
+  box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+.lgame-card[data-hidden]{display:none;}
+.lgame-thumb{
+  height:110px;position:relative;display:flex;
+  align-items:center;justify-content:center;overflow:hidden;
+}
+.lgame-glow{position:absolute;inset:0;transition:opacity .18s;}
+.lgame-card:hover .lgame-glow{opacity:1.3;}
+.lgame-emoji{font-size:3rem;position:relative;z-index:1;line-height:1;}
+.lgame-badges{
+  position:absolute;top:8px;left:8px;
+  display:flex;flex-direction:column;gap:3px;align-items:flex-start;
+}
+.lgame-badge{
+  font-size:.58rem;font-weight:800;letter-spacing:.05em;
+  padding:2px 7px;border-radius:4px;backdrop-filter:blur(4px);
+}
+.lb-live{background:rgba(34,197,94,.22);color:#4ade80;border:1px solid rgba(34,197,94,.3);}
+.lb-hot{background:rgba(239,68,68,.22);color:#fca5a5;border:1px solid rgba(239,68,68,.3);}
+.lb-new{background:rgba(59,130,246,.22);color:#93c5fd;border:1px solid rgba(59,130,246,.3);}
+.lgame-players{
+  position:absolute;bottom:8px;right:8px;
+  display:flex;align-items:center;gap:4px;
+  font-size:.62rem;color:rgba(226,232,240,.6);font-weight:500;
+}
+.lgame-info{padding:10px 12px 12px;}
+.lgame-name{font-size:.86rem;font-weight:700;margin-bottom:4px;}
+.lgame-meta{display:flex;justify-content:space-between;align-items:center;}
+.lgame-rtp{font-size:.66rem;color:var(--text3);}
+.lgame-payout{font-size:.68rem;font-weight:700;color:var(--gold);}
+
+@media(max-width:700px){
+  .lobby-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
+  .lgame-thumb{height:90px;}
+  .lgame-emoji{font-size:2.4rem;}
+  .lobby-section{padding:14px 12px 10px;}
+}
+
+
+/* ═══ MINES GAME ═══════════════════════ */
+#panel-mines{display:none;flex-direction:column;overflow:hidden;}
+#panel-mines.active{display:flex;}
+
+.mines-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;height:42px;flex-shrink:0;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+}
+.mines-bar-l{display:flex;align-items:center;gap:10px;}
+
+.mines-main{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  background:var(--bg);overflow:hidden;min-height:0;padding:20px 16px;
+  flex-direction:column;gap:16px;
+}
+
+/* multiplier display */
+.mines-multi{
+  display:flex;align-items:center;gap:12px;
+}
+.mines-multi-val{
+  font-size:2rem;font-weight:900;letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;color:var(--gold);
+  text-shadow:0 0 24px rgba(245,158,11,.5);
+  transition:all .2s;
+}
+.mines-multi-label{font-size:.7rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;}
+
+/* grid */
+.mines-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px;
+  width:100%;max-width:420px;
+}
+.mine-cell{
+  aspect-ratio:1;
+  border-radius:10px;
+  background:var(--bg3);
+  border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;cursor:pointer;
+  transition:all .15s;
+  position:relative;overflow:hidden;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+  user-select:none;
+}
+.mine-cell.idle:hover{
+  background:var(--bg4);border-color:var(--accent);
+  transform:scale(1.04);box-shadow:0 4px 14px rgba(59,130,246,.2);
+}
+.mine-cell.revealed-gem{
+  background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.4);
+  animation:gemPop .25s cubic-bezier(.34,1.56,.64,1);
+}
+.mine-cell.revealed-mine{
+  background:rgba(239,68,68,.18);border-color:rgba(239,68,68,.5);
+  animation:mineBang .3s ease;
+}
+.mine-cell.inactive{cursor:default;opacity:.7;}
+@keyframes gemPop{from{transform:scale(.6);opacity:.5;}to{transform:scale(1);opacity:1;}}
+@keyframes mineBang{0%{transform:scale(1);}30%{transform:scale(1.3);}100%{transform:scale(1);}}
+
+/* status strip */
+.mines-status{
+  display:flex;align-items:center;gap:20px;
+  font-size:.78rem;
+}
+.mines-stat{text-align:center;}
+.mines-stat-val{font-size:1rem;font-weight:800;font-variant-numeric:tabular-nums;}
+.mines-stat-lbl{font-size:.62rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-top:1px;}
+
+/* cashout button on table */
+.btn-mines-cashout{
+  height:40px;padding:0 28px;
+  background:linear-gradient(135deg,var(--green),#16a34a);
+  color:#000;border:none;border-radius:9px;
+  font-size:.88rem;font-weight:800;font-family:'Inter',sans-serif;
+  cursor:pointer;transition:all .15s;
+  box-shadow:0 0 16px rgba(34,197,94,.35);
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+  animation:pulse-btn 1.2s infinite;
+  display:none;
+}
+.btn-mines-cashout.show{display:block;}
+
+/* mines selector */
+.mines-bomb-sel{
+  display:flex;align-items:center;gap:6px;font-size:.8rem;color:var(--text2);
+}
+.mines-bomb-sel select{
+  background:var(--bg3);border:1px solid var(--border);color:var(--text);
+  border-radius:7px;padding:5px 10px;font-size:.78rem;font-family:'Inter',sans-serif;
+  outline:none;cursor:pointer;touch-action:manipulation;
+}
+
+@media(max-width:700px){
+  .mines-grid{gap:6px;max-width:100%;}
+  .mine-cell{border-radius:8px;font-size:1.2rem;}
+  .mines-main{padding:14px 12px;gap:12px;}
+  .mines-multi-val{font-size:1.6rem;}
+}
+
 </style>
 </head>
 <body>
@@ -840,6 +1016,7 @@ body{
       <div class="sbi" id="nav-bj" onclick="goTab('bj')"><div class="sbi-ico">🃏</div><span>Blackjack</span><span class="sb-badge bl">LIVE</span></div>
       <div class="sbi" id="nav-crash" onclick="goTab('crash')"><div class="sbi-ico">🚀</div><span>Crash</span><span class="sb-badge bl">LIVE</span></div>
       <div class="sbi" id="nav-plinko" onclick="goTab('plinko')"><div class="sbi-ico">🔵</div><span>Plinko</span><span class="sb-badge bl">LIVE</span></div>
+      <div class="sbi" id="nav-mines" onclick="goTab('mines')"><div class="sbi-ico">💣</div><span>Mines</span><span class="sb-badge" style="background:rgba(245,158,11,.2);color:var(--gold)">NEW</span></div>
     </div>
     <div class="sb-div"></div>
     <div class="sb-stat-box">
@@ -860,50 +1037,122 @@ body{
 
     <!-- LOBBY -->
     <div class="panel active" id="panel-lobby">
+
+      <!-- HERO -->
       <div class="hero">
-        <div class="hero-live-badge"><span class="live-dot"></span>3 Live Games Active</div>
+        <div class="hero-live-badge"><span class="live-dot"></span>4 Live Games Active</div>
         <h1 class="hero-h1">Play. Win. <span>Rain.</span></h1>
         <p class="hero-sub">Free virtual chips · Provably fair · No real money</p>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;"><button class="hero-cta" onclick="goTab('bj')">🃏 Blackjack</button><button class="hero-cta" style="background:linear-gradient(135deg,#dc2626,#991b1b);box-shadow:0 4px 16px rgba(220,38,38,.35);" onclick="goTab('crash')">🚀 Crash</button><button class="hero-cta" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);box-shadow:0 4px 16px rgba(124,58,237,.35);" onclick="goTab('plinko')">🔵 Plinko</button></div>
-      </div>
-
-      <div class="section">
-        <div class="sec-hd"><div class="sec-title">Available Now</div></div>
-        <div class="featured-card" onclick="goTab('bj')">
-          <div class="fc-art">
-            <div class="fc-art-glow"></div>
-            🃏
-          </div>
-          <div class="fc-info">
-            <div class="fc-badge"><span class="live-dot"></span>&nbsp;LIVE NOW</div>
-            <div class="fc-name">Blackjack</div>
-            <div class="fc-desc">Beat the dealer to 21. 6-deck shoe, dealer stands on soft 17. Blackjack pays 3:2.</div>
-            <div class="fc-meta">
-              <div class="fc-meta-item">
-                <span class="fc-meta-label">Payout</span>
-                <span class="fc-meta-value" style="color:var(--gold)">3:2</span>
-              </div>
-              <div class="fc-meta-item">
-                <span class="fc-meta-label">Min Bet</span>
-                <span class="fc-meta-value">$1</span>
-              </div>
-              <div class="fc-meta-item">
-                <span class="fc-meta-label">Max Bet</span>
-                <span class="fc-meta-value">Balance</span>
-              </div>
-            </div>
-            <button class="fc-play-btn">▶ Play Now</button>
-          </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">
+          <button class="hero-cta" onclick="goTab('bj')">🃏 Blackjack</button>
+          <button class="hero-cta" style="background:linear-gradient(135deg,#dc2626,#991b1b);box-shadow:0 4px 16px rgba(220,38,38,.35);" onclick="goTab('crash')">🚀 Crash</button>
+          <button class="hero-cta" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);box-shadow:0 4px 16px rgba(124,58,237,.35);" onclick="goTab('plinko')">🔵 Plinko</button>
+          <button class="hero-cta" style="background:linear-gradient(135deg,#b45309,#78350f);box-shadow:0 4px 16px rgba(180,83,9,.35);" onclick="goTab('mines')">💣 Mines</button>
         </div>
       </div>
 
+      <!-- GAME GRID -->
+      <div class="lobby-section">
+        <div class="lobby-section-hd">
+          <div class="lobby-section-title">🔥 All Games</div>
+          <div class="lobby-filter-pills">
+            <div class="lfp active" onclick="filterGames('all',this)">All</div>
+            <div class="lfp" onclick="filterGames('live',this)">Live</div>
+            <div class="lfp" onclick="filterGames('cards',this)">Cards</div>
+            <div class="lfp" onclick="filterGames('originals',this)">Originals</div>
+          </div>
+        </div>
+
+        <div class="lobby-grid" id="lobby-grid">
+
+          <div class="lgame-card" data-tags="live cards" onclick="goTab('bj')">
+            <div class="lgame-thumb" style="background:linear-gradient(160deg,#0c1a38,#0f2050);">
+              <div class="lgame-glow" style="background:radial-gradient(circle at 50% 100%,rgba(29,78,216,.85),transparent 65%);"></div>
+              <span class="lgame-emoji">🃏</span>
+              <div class="lgame-badges">
+                <span class="lgame-badge lb-live">● LIVE</span>
+                <span class="lgame-badge lb-hot">🔥 HOT</span>
+              </div>
+              <div class="lgame-players"><span class="live-dot" style="width:5px;height:5px;"></span> 142 playing</div>
+            </div>
+            <div class="lgame-info">
+              <div class="lgame-name">Blackjack</div>
+              <div class="lgame-meta">
+                <span class="lgame-rtp">RTP 99.5%</span>
+                <span class="lgame-payout">3:2 BJ</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="lgame-card" data-tags="live originals" onclick="goTab('crash')">
+            <div class="lgame-thumb" style="background:linear-gradient(160deg,#3b0000,#7f1d1d);">
+              <div class="lgame-glow" style="background:radial-gradient(circle at 50% 100%,rgba(220,38,38,.8),transparent 65%);"></div>
+              <span class="lgame-emoji">🚀</span>
+              <div class="lgame-badges">
+                <span class="lgame-badge lb-live">● LIVE</span>
+              </div>
+              <div class="lgame-players"><span class="live-dot" style="width:5px;height:5px;"></span> 89 playing</div>
+            </div>
+            <div class="lgame-info">
+              <div class="lgame-name">Crash</div>
+              <div class="lgame-meta">
+                <span class="lgame-rtp">RTP 97%</span>
+                <span class="lgame-payout">Up to ∞</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="lgame-card" data-tags="live originals" onclick="goTab('plinko')">
+            <div class="lgame-thumb" style="background:linear-gradient(160deg,#1e0050,#4c1d95);">
+              <div class="lgame-glow" style="background:radial-gradient(circle at 50% 100%,rgba(124,58,237,.85),transparent 65%);"></div>
+              <span class="lgame-emoji">🔵</span>
+              <div class="lgame-badges">
+                <span class="lgame-badge lb-live">● LIVE</span>
+                <span class="lgame-badge lb-new">NEW</span>
+              </div>
+              <div class="lgame-players"><span class="live-dot" style="width:5px;height:5px;"></span> 56 playing</div>
+            </div>
+            <div class="lgame-info">
+              <div class="lgame-name">Plinko</div>
+              <div class="lgame-meta">
+                <span class="lgame-rtp">RTP 96%</span>
+                <span class="lgame-payout">Up to 450×</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="lgame-card" data-tags="live originals" onclick="goTab('mines')">
+            <div class="lgame-thumb" style="background:linear-gradient(160deg,#1c0a00,#78350f);">
+              <div class="lgame-glow" style="background:radial-gradient(circle at 50% 100%,rgba(180,83,9,.85),transparent 65%);"></div>
+              <span class="lgame-emoji">💣</span>
+              <div class="lgame-badges">
+                <span class="lgame-badge lb-new">NEW</span>
+              </div>
+              <div class="lgame-players"><span class="live-dot" style="width:5px;height:5px;"></span> 34 playing</div>
+            </div>
+            <div class="lgame-info">
+              <div class="lgame-name">Mines</div>
+              <div class="lgame-meta">
+                <span class="lgame-rtp">RTP 97%</span>
+                <span class="lgame-payout">Up to 3000×</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- RECENT WINS FEED -->
       <div class="feed-bar">
-        <div class="feed-hd"><span class="live-dot" style="width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green);display:inline-block;margin-right:3px;"></span>Recent Wins</div>
+        <div class="feed-hd">
+          <span class="live-dot" style="width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green);display:inline-block;margin-right:5px;"></span>
+          Recent Wins
+        </div>
         <div class="feed-row" id="feed-row"></div>
       </div>
     </div>
 
-    <!-- BLACKJACK -->
+        <!-- BLACKJACK -->
     <div class="panel" id="panel-bj">
       <!-- sub-bar -->
       <div class="bj-bar">
@@ -1124,6 +1373,90 @@ body{
       </div>
     </div>
 
+
+    <!-- MINES -->
+    <div class="panel" id="panel-mines">
+      <div class="mines-bar">
+        <div class="mines-bar-l">
+          <div class="bj-back" onclick="goTab('lobby')">←</div>
+          <div class="bj-ico" style="background:linear-gradient(135deg,#b45309,#78350f);">💣</div>
+          <span class="crash-title">Mines</span>
+        </div>
+        <div class="fairplay">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          Provably Fair
+        </div>
+      </div>
+
+      <div class="mines-main">
+        <!-- Multiplier -->
+        <div class="mines-multi">
+          <div>
+            <div class="mines-multi-val" id="mines-multi">0.00×</div>
+            <div class="mines-multi-label">Current Multiplier</div>
+          </div>
+          <button class="btn-mines-cashout" id="btn-mines-cashout" onclick="minesCashout()">Cash Out</button>
+        </div>
+
+        <!-- Status -->
+        <div class="mines-status">
+          <div class="mines-stat">
+            <div class="mines-stat-val" id="mines-gems">0</div>
+            <div class="mines-stat-lbl">💎 Gems</div>
+          </div>
+          <div class="mines-stat">
+            <div class="mines-stat-val" id="mines-mines-left">?</div>
+            <div class="mines-stat-lbl">💣 Mines</div>
+          </div>
+          <div class="mines-stat">
+            <div class="mines-stat-val" id="mines-win">$0</div>
+            <div class="mines-stat-lbl">Potential</div>
+          </div>
+        </div>
+
+        <!-- Grid -->
+        <div class="mines-grid" id="mines-grid"></div>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bj-bottom">
+        <div class="bet-bar">
+          <div class="chips-bet-row">
+            <div class="chip-reset" onclick="minesClearBet()">↺</div>
+            <div class="chip c1"   onclick="minesAddBet(1)">1</div>
+            <div class="chip c5"   onclick="minesAddBet(5)">5</div>
+            <div class="chip c25"  onclick="minesAddBet(25)">25</div>
+            <div class="chip c100" onclick="minesAddBet(100)">100</div>
+            <div class="chip c200" onclick="minesAddBet(200)">200</div>
+          </div>
+          <div class="bet-action-row">
+            <div class="bet-group">
+              <span class="bi-sym">$</span>
+              <input class="bi-in" id="mines-bet-in" type="text" value="0" readonly>
+              <div style="display:flex;gap:2px;">
+                <button class="qb" onclick="minesAdjBet(.5)">½</button>
+                <button class="qb" onclick="minesAdjBet(2)">2×</button>
+                <button class="qb" onclick="minesMaxBet()">Max</button>
+              </div>
+            </div>
+            <div class="mines-bomb-sel">
+              <span style="font-size:.9rem;">💣</span>
+              <select id="mines-bomb-count" onchange="minesSetBombs(this.value)">
+                <option value="1">1 mine</option>
+                <option value="3" selected>3 mines</option>
+                <option value="5">5 mines</option>
+                <option value="10">10 mines</option>
+                <option value="15">15 mines</option>
+                <option value="20">20 mines</option>
+                <option value="24">24 mines</option>
+              </select>
+            </div>
+            <button class="btn-place" id="btn-mines-deal" onclick="minesStart()">Start Game</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </main>
 </div>
 
@@ -1135,6 +1468,7 @@ body{
     <button class="mnav-btn" id="mnav-bj" onclick="goTab('bj')"><span class="mnav-ico">🃏</span>BJ</button>
     <button class="mnav-btn" id="mnav-crash" onclick="goTab('crash')"><span class="mnav-ico">🚀</span>Crash</button>
     <button class="mnav-btn" id="mnav-plinko" onclick="goTab('plinko')"><span class="mnav-ico">🔵</span>Plinko</button>
+    <button class="mnav-btn" id="mnav-mines" onclick="goTab('mines')"><span class="mnav-ico">💣</span>Mines</button>
   </div>
 </div>
 
@@ -1324,7 +1658,9 @@ function sfxBonus(){
 // ════════════════════════════════════════
 //  STATE
 // ════════════════════════════════════════
-let bal   = Math.max(1, +(localStorage.getItem('rb_bal') || 0)) || 1000;
+// Properly load balance — default 1000 if missing, zero, or negative
+let _storedBal = +(localStorage.getItem('rb_bal') || 0);
+let bal = (_storedBal > 0) ? _storedBal : 1000;
 let wag   = +(localStorage.getItem('rb_wag')  || 0);
 let lbDay = localStorage.getItem('rb_lb') || '';
 let stats = JSON.parse(localStorage.getItem('rb_stats') || '{"w":0,"l":0,"p":0,"bj":0,"str":0,"best":0}');
@@ -1641,7 +1977,7 @@ function showToast(msg){
 // ── NAV ─────────────────────────────────
 function goTab(id){
   sfxClick();
-  ['lobby','bj','crash','plinko'].forEach(t=>{
+  ['lobby','bj','crash','plinko','mines'].forEach(t=>{
     document.getElementById('panel-'+t)?.classList.toggle('active', t===id);
     document.getElementById('nav-'+t)?.classList.toggle('active', t===id);
     // mobile nav
@@ -1654,8 +1990,16 @@ function goTab(id){
 }
 
 // ── INIT ────────────────────────────────
-// Clear corrupted save if balance ended up at 0
-if(bal <= 0){ bal = 1000; save(); }
+// Migrate / repair any bad saved state
+(function migrateSave(){
+  const stored = localStorage.getItem('rb_bal');
+  // If never set, or zero, or garbage — start fresh at 1000
+  if(!stored || +stored <= 0 || isNaN(+stored)){
+    localStorage.setItem('rb_bal', '1000');
+    bal = 1000;
+  }
+})();
+if(bal < 10){ bal = 1000; save(); }
 buildDeck();
 refreshUI();
 refreshHist();
@@ -2664,6 +3008,358 @@ self.addEventListener('fetch', e => {
   }
 
 })();
+
+
+// ════════════════════════════════════════
+//  MINES GAME
+// ════════════════════════════════════════
+const MinesGame = (function(){
+  const TOTAL = 25;
+  let mBet = 0, mBombs = 3, mPhase = 'idle';
+  let mGrid = [];      // 'hidden'|'gem'|'mine'
+  let mMinePos = [];   // indices of mines
+  let mRevealed = 0;
+  let mProfit = 0;
+
+  // Multiplier table: mults[bombs][gems_revealed]
+  // Formula: (TOTAL / (TOTAL - bombs)) ^ gems * house_edge(0.97)
+  function calcMulti(bombs, gemsFound){
+    if(gemsFound === 0) return 0;
+    let m = 1;
+    for(let i = 0; i < gemsFound; i++){
+      m *= (TOTAL - bombs - i) / (TOTAL - i);
+    }
+    return +(0.97 / m).toFixed(2);
+  }
+
+  function buildGrid(){
+    const grid = document.getElementById('mines-grid');
+    if(!grid) return;
+    grid.innerHTML = '';
+    mGrid = Array(TOTAL).fill('hidden');
+    for(let i = 0; i < TOTAL; i++){
+      const cell = document.createElement('div');
+      cell.className = 'mine-cell idle';
+      cell.dataset.idx = i;
+      cell.innerHTML = '?';
+      cell.addEventListener('click', () => reveal(i));
+      grid.appendChild(cell);
+    }
+  }
+
+  function reveal(idx){
+    if(mPhase !== 'playing') return;
+    if(mGrid[idx] !== 'hidden') return;
+
+    if(mMinePos.includes(idx)){
+      // HIT A MINE 💥
+      mGrid[idx] = 'mine';
+      updateCell(idx);
+      // reveal all mines
+      mMinePos.forEach(mi => {
+        if(mi !== idx){ mGrid[mi] = 'mine'; updateCell(mi); }
+      });
+      sfxBust();
+      mPhase = 'over';
+      disableGrid();
+      document.getElementById('btn-mines-cashout').classList.remove('show');
+      document.getElementById('btn-mines-deal').disabled = false;
+      document.getElementById('mines-multi').textContent = '0.00×';
+      document.getElementById('mines-multi').style.color = 'var(--red)';
+      document.getElementById('mines-win').textContent = '-$'+fmt(mBet);
+      showToast('💥 Mine hit! Lost $'+fmt(mBet));
+      pushFeed(mBet, -mBet, 'Mines 💣');
+      save(); recordBalance();
+    } else {
+      // SAFE GEM 💎
+      mGrid[idx] = 'gem';
+      mRevealed++;
+      updateCell(idx);
+      sfxChip();
+
+      const multi = calcMulti(mBombs, mRevealed);
+      const potential = Math.floor(mBet * multi);
+      mProfit = potential - mBet;
+
+      document.getElementById('mines-multi').textContent = multi.toFixed(2)+'×';
+      document.getElementById('mines-multi').style.color = 'var(--gold)';
+      document.getElementById('mines-gems').textContent = mRevealed;
+      document.getElementById('mines-win').textContent = '$'+fmt(potential);
+      document.getElementById('btn-mines-cashout').classList.add('show');
+
+      // Auto-win if all gems found
+      const totalGems = TOTAL - mBombs;
+      if(mRevealed >= totalGems) cashout(true);
+    }
+  }
+
+  function updateCell(idx){
+    const grid = document.getElementById('mines-grid');
+    if(!grid) return;
+    const cell = grid.children[idx];
+    if(!cell) return;
+    if(mGrid[idx] === 'gem'){
+      cell.className = 'mine-cell revealed-gem';
+      cell.textContent = '💎';
+    } else if(mGrid[idx] === 'mine'){
+      cell.className = 'mine-cell revealed-mine';
+      cell.textContent = '💣';
+    }
+  }
+
+  function disableGrid(){
+    const cells = document.querySelectorAll('.mine-cell.idle');
+    cells.forEach(c => c.classList.remove('idle'));
+  }
+
+  function cashout(auto=false){
+    if(mPhase !== 'playing') return;
+    const multi = calcMulti(mBombs, mRevealed);
+    const payout = Math.floor(mBet * multi);
+    const net = payout - mBet;
+    bal += payout;
+    mPhase = 'over';
+    disableGrid();
+    // reveal remaining mines
+    mMinePos.forEach(mi => {
+      if(mGrid[mi] === 'hidden'){ mGrid[mi] = 'mine'; updateCell(mi); }
+    });
+    document.getElementById('btn-mines-cashout').classList.remove('show');
+    document.getElementById('btn-mines-deal').disabled = false;
+    document.getElementById('mines-multi').style.color = 'var(--green)';
+    sfxWin();
+    if(!auto) showToast('💎 Cashed out '+multi.toFixed(2)+'× · +$'+fmt(net));
+    pushFeed(mBet, net, 'Mines '+multi.toFixed(2)+'×');
+    refreshUI(); recordBalance(); save();
+  }
+
+  function start(){
+    if(mBet <= 0){ showToast('Place a bet first!'); return; }
+    if(mBet > bal){ showToast('Not enough balance'); return; }
+    if(mBombs >= TOTAL){ showToast('Too many mines!'); return; }
+
+    bal -= mBet; mRevealed = 0; mPhase = 'playing';
+    refreshUI(); recordBalance();
+
+    // Place mines randomly
+    mMinePos = [];
+    const pool = Array.from({length:TOTAL},(_,i)=>i);
+    for(let i=pool.length-1;i>0;i--){ const j=0|Math.random()*(i+1);[pool[i],pool[j]]=[pool[j],pool[i]]; }
+    mMinePos = pool.slice(0, mBombs);
+
+    buildGrid();
+    document.getElementById('mines-multi').textContent = '1.00×';
+    document.getElementById('mines-multi').style.color = 'var(--gold)';
+    document.getElementById('mines-gems').textContent = '0';
+    document.getElementById('mines-mines-left').textContent = mBombs;
+    document.getElementById('mines-win').textContent = '$'+fmt(mBet);
+    document.getElementById('btn-mines-deal').disabled = true;
+    document.getElementById('btn-mines-cashout').classList.remove('show');
+    sfxDeal();
+  }
+
+  return {
+    start,
+    cashout(){ cashout(); },
+    setBombs(n){ mBombs = +n; },
+    addBet(n){
+      if(mPhase === 'playing') return;
+      if(mBet+n > bal){ showToast('⚠ Not enough balance'); return; }
+      mBet += n; refreshMinesBet(); sfxChip();
+    },
+    clearBet(){ if(mPhase === 'playing') return; mBet=0; refreshMinesBet(); },
+    adjBet(x){ if(mPhase === 'playing') return; let nb=Math.floor(mBet*x)||1; mBet=Math.min(nb,bal); refreshMinesBet(); },
+    maxBet(){ if(mPhase === 'playing') return; mBet=bal; refreshMinesBet(); },
+  };
+})();
+
+function refreshMinesBet(){
+  const el = document.getElementById('mines-bet-in');
+  if(el) el.value = fmt(MinesGame._bet||0);
+}
+
+// Proxy helpers
+function minesStart(){ MinesGame.start(); }
+function minesCashout(){ MinesGame.cashout(); }
+function minesSetBombs(n){ MinesGame.setBombs(n); }
+function minesAddBet(n){ MinesGame.addBet(n); }
+function minesClearBet(){ MinesGame.clearBet(); }
+function minesAdjBet(x){ MinesGame.adjBet(x); }
+function minesMaxBet(){ MinesGame.maxBet(); }
+
+// Patch MinesGame to track bet properly
+(function patchMines(){
+  const orig = MinesGame;
+  let _bet = 0;
+  // Override addBet/clearBet/adjBet/maxBet to also update display
+  const _addBet = orig.addBet.bind(orig);
+  const _clr = orig.clearBet.bind(orig);
+  const _adj = orig.adjBet.bind(orig);
+  const _max = orig.maxBet.bind(orig);
+  function upd(v){ _bet = v; const el=document.getElementById('mines-bet-in'); if(el) el.value=fmt(v); }
+  // We patch via the module's own bet variable via direct reassignment
+  // The module reads mBet internally so we just need display sync
+  window.minesAddBet = function(n){
+    const inp = document.getElementById('mines-bet-in');
+    const cur = +(inp?.value.replace(/,/g,'')||0);
+    if(cur+n > bal){ showToast('⚠ Not enough balance'); return; }
+    const nv = cur+n; upd(nv); sfxChip();
+    orig.addBet = () => {}; // disable internal (already tracked)
+    // call directly
+    import_bet_to_module(nv);
+  };
+  window.minesClearBet = function(){
+    upd(0); import_bet_to_module(0);
+  };
+  window.minesAdjBet = function(x){
+    const cur = +(document.getElementById('mines-bet-in')?.value.replace(/,/g,'')||0);
+    const nv = Math.min(Math.floor(cur*x)||1, bal); upd(nv); import_bet_to_module(nv);
+  };
+  window.minesMaxBet = function(){
+    upd(bal); import_bet_to_module(bal);
+  };
+  window.import_bet_to_module = function(v){
+    // MinesGame reads mBet from closure — inject via start override
+    window._mines_pending_bet = v;
+  };
+  const origStart = orig.start.bind(orig);
+  window.minesStart = function(){
+    // Sync bet from input field before starting
+    const inp = document.getElementById('mines-bet-in');
+    const amt = +(inp?.value.replace(/,/g,'')||0);
+    if(amt <= 0){ showToast('Place a bet first!'); return; }
+    if(amt > bal){ showToast('Not enough balance'); return; }
+    // Hack: directly call start with bet from input
+    MinesGame._startWithBet(amt);
+  };
+})();
+
+// Override to accept bet amount directly
+MinesGame._startWithBet = function(betAmt){
+  const TOTAL = 25;
+  const mBombs = +(document.getElementById('mines-bomb-count')?.value||3);
+  if(betAmt > bal){ showToast('Not enough balance'); return; }
+  if(mBombs >= TOTAL){ showToast('Too many mines!'); return; }
+
+  bal -= betAmt; refreshUI(); recordBalance();
+
+  // Place mines
+  const pool = Array.from({length:TOTAL},(_,i)=>i);
+  for(let i=pool.length-1;i>0;i--){ const j=0|Math.random()*(i+1);[pool[i],pool[j]]=[pool[j],pool[i]]; }
+  const minePos = pool.slice(0, mBombs);
+  let gemsFound = 0;
+  let phase = 'playing';
+
+  // Build grid
+  const grid = document.getElementById('mines-grid');
+  grid.innerHTML = '';
+  document.getElementById('mines-multi').textContent = '1.00×';
+  document.getElementById('mines-multi').style.color = 'var(--gold)';
+  document.getElementById('mines-gems').textContent = '0';
+  document.getElementById('mines-mines-left').textContent = mBombs;
+  document.getElementById('mines-win').textContent = '$'+fmt(betAmt);
+  document.getElementById('btn-mines-deal').disabled = true;
+  document.getElementById('btn-mines-cashout').classList.remove('show');
+
+  function calcMulti(bombs, gems){
+    if(gems === 0) return 1;
+    let m = 1;
+    for(let i=0;i<gems;i++) m *= (TOTAL-bombs-i)/(TOTAL-i);
+    return +(0.97/m).toFixed(2);
+  }
+
+  function doReveal(idx, cell){
+    if(phase !== 'playing') return;
+    if(cell.dataset.revealed) return;
+    cell.dataset.revealed = '1';
+
+    if(minePos.includes(idx)){
+      // MINE HIT
+      cell.className='mine-cell revealed-mine'; cell.textContent='💣';
+      minePos.forEach(mi=>{
+        const c=grid.children[mi];
+        if(c&&!c.dataset.revealed){ c.className='mine-cell revealed-mine'; c.textContent='💣'; }
+      });
+      sfxBust(); phase='over';
+      document.getElementById('btn-mines-cashout').classList.remove('show');
+      document.getElementById('btn-mines-deal').disabled=false;
+      document.getElementById('mines-multi').textContent='0.00×';
+      document.getElementById('mines-multi').style.color='var(--red)';
+      document.getElementById('mines-win').textContent='-$'+fmt(betAmt);
+      showToast('💥 Mine hit! Lost $'+fmt(betAmt));
+      pushFeed(betAmt,-betAmt,'Mines 💣');
+      save(); recordBalance();
+    } else {
+      // GEM
+      cell.className='mine-cell revealed-gem'; cell.textContent='💎';
+      gemsFound++;
+      sfxChip();
+      const multi = calcMulti(mBombs, gemsFound);
+      const pot = Math.floor(betAmt*multi);
+      document.getElementById('mines-multi').textContent=multi.toFixed(2)+'×';
+      document.getElementById('mines-gems').textContent=gemsFound;
+      document.getElementById('mines-win').textContent='$'+fmt(pot);
+      document.getElementById('btn-mines-cashout').classList.add('show');
+
+      if(gemsFound >= TOTAL - mBombs){
+        // all gems found — auto cashout
+        doCashout();
+      }
+    }
+  }
+
+  function doCashout(){
+    if(phase!=='playing') return;
+    const multi = calcMulti(mBombs, gemsFound);
+    const payout = Math.floor(betAmt*multi);
+    const net = payout-betAmt;
+    bal += payout; phase='over';
+    minePos.forEach(mi=>{
+      const c=grid.children[mi];
+      if(c&&!c.dataset.revealed){ c.className='mine-cell revealed-mine'; c.textContent='💣'; }
+    });
+    document.getElementById('btn-mines-cashout').classList.remove('show');
+    document.getElementById('btn-mines-deal').disabled=false;
+    document.getElementById('mines-multi').style.color='var(--green)';
+    sfxWin();
+    showToast('💎 Cashed out '+multi.toFixed(2)+'× · +$'+fmt(net));
+    pushFeed(betAmt,net,'Mines '+multi.toFixed(2)+'×');
+    refreshUI(); recordBalance(); save();
+  }
+
+  // Attach cashout
+  window._mines_cashout_fn = doCashout;
+  document.getElementById('btn-mines-cashout').onclick = doCashout;
+
+  sfxDeal();
+
+  for(let i=0;i<TOTAL;i++){
+    const cell=document.createElement('div');
+    cell.className='mine-cell idle';
+    cell.dataset.idx=i;
+    cell.textContent='?';
+    cell.style.touchAction='manipulation';
+    const idx=i;
+    cell.addEventListener('click',()=>doReveal(idx,cell));
+    grid.appendChild(cell);
+  }
+};
+
+// Filter lobby games
+function filterGames(tag, el){
+  document.querySelectorAll('.lfp').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.lgame-card').forEach(card=>{
+    const tags = card.dataset.tags || '';
+    if(tag === 'all' || tags.includes(tag)){
+      card.removeAttribute('data-hidden');
+      card.style.display='';
+    } else {
+      card.setAttribute('data-hidden','1');
+      card.style.display='none';
+    }
+  });
+}
 
 </script>
 </body>
