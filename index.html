@@ -980,6 +980,109 @@ body{
   .mines-multi-val{font-size:1.6rem;}
 }
 
+
+/* ══ XP / LEVEL BAR ══════════════════════ */
+.xp-box{margin:8px;padding:11px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;}
+.xp-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.xp-level{font-size:.72rem;font-weight:800;color:var(--gold);}
+.xp-label{font-size:.6rem;color:var(--text3);}
+.xp-bar-bg{height:6px;background:var(--bg4);border-radius:4px;overflow:hidden;}
+.xp-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),#f97316);border-radius:4px;transition:width .6s cubic-bezier(.34,1.56,.64,1);}
+.xp-pts{font-size:.6rem;color:var(--text3);margin-top:3px;text-align:right;}
+
+/* ══ ACHIEVEMENT POPUP ════════════════════ */
+.achievement-popup{
+  position:fixed;top:70px;right:18px;z-index:2000;
+  background:linear-gradient(135deg,#1c2a3a,#1a2540);
+  border:1px solid var(--gold);border-radius:12px;
+  padding:12px 16px;display:flex;align-items:center;gap:12px;
+  box-shadow:0 8px 32px rgba(0,0,0,.6),0 0 20px rgba(245,158,11,.15);
+  transform:translateX(120%);transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+  max-width:280px;
+}
+.achievement-popup.show{transform:translateX(0);}
+.ach-icon{font-size:1.8rem;flex-shrink:0;}
+.ach-text-wrap{}
+.ach-label{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:2px;}
+.ach-name{font-size:.88rem;font-weight:800;color:var(--text);}
+.ach-desc{font-size:.7rem;color:var(--text2);margin-top:1px;}
+
+/* ══ STATS PAGE ══════════════════════════ */
+#panel-stats{padding:0;}
+.stats-page{padding:20px 22px 40px;}
+.stats-page-title{font-size:1.2rem;font-weight:800;letter-spacing:-.02em;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:24px;}
+.stat-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px 14px 12px;}
+.sc-val{font-size:1.4rem;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:-.02em;}
+.sc-lbl{font-size:.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-top:2px;}
+.stats-section-title{font-size:.8rem;font-weight:700;color:var(--text2);margin-bottom:10px;margin-top:20px;}
+
+/* charts */
+.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.chart-box{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px;}
+.chart-box canvas{width:100%!important;}
+.chart-title{font-size:.68rem;font-weight:700;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.08em;}
+
+/* achievements grid */
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:20px;}
+.ach-item{
+  background:var(--bg3);border:1px solid var(--border);border-radius:10px;
+  padding:12px 10px;text-align:center;
+  transition:all .15s;
+}
+.ach-item.unlocked{border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.06);}
+.ach-item.locked{opacity:.45;filter:grayscale(1);}
+.ach-item-icon{font-size:1.6rem;margin-bottom:5px;}
+.ach-item-name{font-size:.72rem;font-weight:700;margin-bottom:2px;}
+.ach-item-desc{font-size:.62rem;color:var(--text3);}
+.ach-item.unlocked .ach-item-name{color:var(--gold);}
+
+/* records */
+.records-list{display:flex;flex-direction:column;gap:6px;margin-bottom:20px;}
+.record-row{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 13px;
+}
+.rec-lbl{font-size:.78rem;color:var(--text2);}
+.rec-val{font-size:.82rem;font-weight:800;font-variant-numeric:tabular-nums;}
+
+/* share button */
+.btn-share{
+  display:inline-flex;align-items:center;gap:7px;
+  background:linear-gradient(135deg,#7c3aed,#5b21b6);
+  color:#fff;border:none;border-radius:9px;padding:10px 20px;
+  font-size:.82rem;font-weight:700;font-family:'Inter',sans-serif;
+  cursor:pointer;transition:all .15s;touch-action:manipulation;
+  box-shadow:0 2px 12px rgba(124,58,237,.35);
+}
+.btn-share:hover{filter:brightness(1.1);}
+
+/* share preview card */
+#share-canvas-wrap{
+  display:none;
+  position:fixed;inset:0;z-index:3000;
+  background:rgba(0,0,0,.85);
+  align-items:center;justify-content:center;
+  flex-direction:column;gap:14px;
+  backdrop-filter:blur(8px);
+}
+#share-canvas-wrap.show{display:flex;}
+#share-canvas{border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.8);max-width:90vw;}
+.share-actions{display:flex;gap:10px;}
+.share-btn{
+  padding:10px 22px;border-radius:8px;border:none;
+  font-size:.82rem;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;
+  touch-action:manipulation;
+}
+.share-save{background:var(--green);color:#000;}
+.share-close{background:var(--bg3);color:var(--text);border:1px solid var(--border);}
+
+@media(max-width:700px){
+  .charts-row{grid-template-columns:1fr;}
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .stats-page{padding:14px 14px 40px;}
+}
+
 </style>
 </head>
 <body>
@@ -1021,6 +1124,18 @@ body{
       <div class="sbi" id="nav-crash" onclick="goTab('crash')"><div class="sbi-ico">🚀</div><span>Crash</span><span class="sb-badge bl">LIVE</span></div>
       <div class="sbi" id="nav-plinko" onclick="goTab('plinko')"><div class="sbi-ico">🔵</div><span>Plinko</span><span class="sb-badge bl">LIVE</span></div>
       <div class="sbi" id="nav-mines" onclick="goTab('mines')"><div class="sbi-ico">💣</div><span>Mines</span><span class="sb-badge" style="background:rgba(245,158,11,.2);color:var(--gold)">NEW</span></div>
+    </div>
+    <div class="sb-grp">
+      <div class="sb-grp-lbl">Profile</div>
+      <div class="sbi" id="nav-stats" onclick="goTab('stats')"><div class="sbi-ico">📊</div><span>My Stats</span></div>
+    </div>
+    <div class="sb-div"></div>
+    <div class="xp-box">
+      <div class="xp-row">
+        <span class="xp-level" id="xp-level-label">Level 1</span>
+        <span class="xp-label" id="xp-pts-label">0 / 500 XP</span>
+      </div>
+      <div class="xp-bar-bg"><div class="xp-bar-fill" id="xp-bar" style="width:0%"></div></div>
     </div>
     <div class="sb-div"></div>
     <div class="sb-stat-box">
@@ -1461,7 +1576,82 @@ body{
       </div>
     </div>
 
+
+    <!-- STATS PAGE -->
+    <div class="panel" id="panel-stats">
+      <div class="stats-page">
+        <div class="stats-page-title">
+          📊 My Stats
+          <button class="btn-share" onclick="openShareCard()">📸 Share Stats</button>
+        </div>
+
+        <!-- Key numbers -->
+        <div class="stats-grid">
+          <div class="stat-card"><div class="sc-val" id="ss-bal" style="color:var(--green)">$1,000</div><div class="sc-lbl">Balance</div></div>
+          <div class="stat-card"><div class="sc-val" id="ss-wag">$0</div><div class="sc-lbl">Total Wagered</div></div>
+          <div class="stat-card"><div class="sc-val" id="ss-pl">$0</div><div class="sc-lbl">Net Profit</div></div>
+          <div class="stat-card"><div class="sc-val" id="ss-wr">–</div><div class="sc-lbl">Win Rate</div></div>
+          <div class="stat-card"><div class="sc-val" id="ss-hands">0</div><div class="sc-lbl">Hands Played</div></div>
+          <div class="stat-card"><div class="sc-val" id="ss-streak" style="color:var(--gold)">0</div><div class="sc-lbl">Best Streak</div></div>
+          <div class="stat-card"><div class="sc-val" id="ss-bj" style="color:var(--gold)">0</div><div class="sc-lbl">Blackjacks</div></div>
+          <div class="stat-card"><div class="sc-val" id="ss-level" style="color:var(--gold)">1</div><div class="sc-lbl">Level</div></div>
+        </div>
+
+        <!-- Charts row -->
+        <div class="stats-section-title">Session Balance</div>
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:20px;">
+          <canvas id="stats-balance-chart" height="80"></canvas>
+        </div>
+
+        <!-- Win / Loss breakdown -->
+        <div class="charts-row">
+          <div class="chart-box">
+            <div class="chart-title">Outcomes</div>
+            <canvas id="stats-pie-chart" height="120"></canvas>
+          </div>
+          <div class="chart-box">
+            <div class="chart-title">History</div>
+            <div id="stats-hist-dots" style="display:flex;flex-wrap:wrap;gap:4px;padding-top:4px;"></div>
+          </div>
+        </div>
+
+        <!-- Records -->
+        <div class="stats-section-title">Records</div>
+        <div class="records-list">
+          <div class="record-row"><span class="rec-lbl">🏆 Biggest Single Win</span><span class="rec-val" id="rec-bigwin" style="color:var(--green)">–</span></div>
+          <div class="record-row"><span class="rec-lbl">💥 Biggest Single Loss</span><span class="rec-val" id="rec-bigloss" style="color:var(--red)">–</span></div>
+          <div class="record-row"><span class="rec-lbl">🔥 Longest Win Streak</span><span class="rec-val" id="rec-streak" style="color:var(--gold)">–</span></div>
+          <div class="record-row"><span class="rec-lbl">🃏 Blackjacks Hit</span><span class="rec-val" id="rec-bj" style="color:var(--gold)">–</span></div>
+        </div>
+
+        <!-- Achievements -->
+        <div class="stats-section-title">Achievements</div>
+        <div class="ach-grid" id="ach-grid"></div>
+
+      </div>
+    </div>
+
   </main>
+</div>
+
+
+<!-- Achievement popup -->
+<div class="achievement-popup" id="ach-popup">
+  <div class="ach-icon" id="ach-popup-icon">🏆</div>
+  <div class="ach-text-wrap">
+    <div class="ach-label">Achievement Unlocked!</div>
+    <div class="ach-name" id="ach-popup-name">First Blood</div>
+    <div class="ach-desc" id="ach-popup-desc">Won your first hand</div>
+  </div>
+</div>
+
+<!-- Share card overlay -->
+<div id="share-canvas-wrap">
+  <canvas id="share-canvas" width="480" height="320"></canvas>
+  <div class="share-actions">
+    <button class="share-btn share-save" onclick="saveShareCard()">⬇ Save Image</button>
+    <button class="share-btn share-close" onclick="closeShareCard()">✕ Close</button>
+  </div>
 </div>
 
 <div class="toast" id="toast-el"></div>
@@ -1473,6 +1663,7 @@ body{
     <button class="mnav-btn" id="mnav-crash" onclick="goTab('crash')"><span class="mnav-ico">🚀</span>Crash</button>
     <button class="mnav-btn" id="mnav-plinko" onclick="goTab('plinko')"><span class="mnav-ico">🔵</span>Plinko</button>
     <button class="mnav-btn" id="mnav-mines" onclick="goTab('mines')"><span class="mnav-ico">💣</span>Mines</button>
+    <button class="mnav-btn" id="mnav-stats" onclick="goTab('stats')"><span class="mnav-ico">📊</span>Stats</button>
   </div>
 </div>
 
@@ -1888,6 +2079,9 @@ function endRound(r){
   );
 
   pushFeed(bet, net);
+  earnXP(bet, net > 0);
+  trackRecord(net);
+  checkAchievements({r, net, betAmt:bet, streak:stats.str});
   refreshUI(); refreshHist(); save(); recordBalance(); setAutoBtn('idle');
 
   if(bal <= 0){
@@ -1981,7 +2175,7 @@ function showToast(msg){
 // ── NAV ─────────────────────────────────
 function goTab(id){
   sfxClick();
-  ['lobby','bj','crash','plinko','mines'].forEach(t=>{
+  ['lobby','bj','crash','plinko','mines','stats'].forEach(t=>{
     document.getElementById('panel-'+t)?.classList.toggle('active', t===id);
     document.getElementById('nav-'+t)?.classList.toggle('active', t===id);
     // mobile nav
@@ -1991,6 +2185,7 @@ function goTab(id){
   document.getElementById('main-scroll').scrollTop = 0;
   if(id === 'crash') CrashGame.start();
   if(id === 'plinko') PlinkoGame.init();
+  if(id === 'stats') renderStatsPage();
 }
 
 // ── INIT ────────────────────────────────
@@ -2010,6 +2205,7 @@ refreshHist();
 checkBonus();
 seedFeed();
 setTimeout(drawGraph, 200);
+setTimeout(refreshXPBar, 100);
 // Pre-decode card audio eagerly on first interaction (also unlocks AudioContext)
 document.addEventListener('pointerdown', function preload(){
   getAC();
@@ -2290,6 +2486,7 @@ const CrashGame = (function(){
     showToast('🟢 Cashed out '+cMulti.toFixed(2)+'x · +$'+fmt(net));
     sfxWin();
     pushFeed(cBet, net, 'Crash '+cMulti.toFixed(2)+'x');
+    earnXP(cBet, true); trackRecord(net); checkCrashAch(cMulti);
   }
 
   function placeBet(){
@@ -2723,6 +2920,7 @@ const PlinkoGame = (function(){
 
     if(net >= 0) sfxWin(); else sfxLose();
     showToast(net >= 0 ? `🔵 ${b.mult}x · +$${fmt(net)}` : `🔵 ${b.mult}x · -$${fmt(Math.abs(net))}`);
+    earnXP(b.betAmt, net>=0); trackRecord(net); checkPlinkoAch(b.mult);
     dropping = false;
     document.getElementById('btn-drop').disabled = false;
   }
@@ -3364,6 +3562,364 @@ function filterGames(tag, el){
     }
   });
 }
+
+
+// ════════════════════════════════════════
+//  XP + LEVEL SYSTEM
+// ════════════════════════════════════════
+const XP_LEVELS = [0,500,1200,2200,3500,5500,8000,12000,18000,26000,40000];
+let xp = +(localStorage.getItem('rb_xp')||0);
+
+function getLevel(x){ let l=1; for(let i=1;i<XP_LEVELS.length;i++){ if(x>=XP_LEVELS[i]) l=i+1; else break; } return Math.min(l,XP_LEVELS.length); }
+function xpForLevel(l){ return XP_LEVELS[Math.min(l-1,XP_LEVELS.length-1)]; }
+function xpForNextLevel(l){ return XP_LEVELS[Math.min(l,XP_LEVELS.length-1)]; }
+
+function earnXP(betAmt, win){
+  const earned = Math.max(1, Math.floor(betAmt * (win ? 0.08 : 0.04)));
+  const oldLevel = getLevel(xp);
+  xp += earned;
+  localStorage.setItem('rb_xp', xp);
+  const newLevel = getLevel(xp);
+  if(newLevel > oldLevel){
+    const bonus = newLevel * 100;
+    bal += bonus; save(); refreshUI();
+    showToast('⭐ Level Up! Level '+newLevel+' · +$'+fmt(bonus)+' bonus!');
+    sfxBlackjack();
+  }
+  refreshXPBar();
+}
+
+function refreshXPBar(){
+  const lv = getLevel(xp);
+  const cur = xp - xpForLevel(lv);
+  const needed = xpForNextLevel(lv) - xpForLevel(lv);
+  const pct = Math.min(100, Math.round(cur/needed*100));
+  const bar = document.getElementById('xp-bar');
+  const lvl = document.getElementById('xp-level-label');
+  const pts = document.getElementById('xp-pts-label');
+  if(bar) bar.style.width = pct+'%';
+  if(lvl) lvl.textContent = 'Level '+lv;
+  if(pts) pts.textContent = fmt(xp - xpForLevel(lv))+' / '+fmt(needed)+' XP';
+}
+
+// ════════════════════════════════════════
+//  ACHIEVEMENTS
+// ════════════════════════════════════════
+const ACHIEVEMENTS = [
+  {id:'first_win',    icon:'🏆', name:'First Blood',      desc:'Win your first hand'},
+  {id:'first_bj',    icon:'🃏', name:'Natural Born',      desc:'Hit a Blackjack'},
+  {id:'streak3',     icon:'🔥', name:'On Fire',           desc:'Win 3 in a row'},
+  {id:'streak5',     icon:'⚡', name:'Unstoppable',       desc:'Win 5 in a row'},
+  {id:'big_win',     icon:'💰', name:'High Roller',       desc:'Win $500+ in one hand'},
+  {id:'whale',       icon:'🐋', name:'Whale',             desc:'Wager $10,000 total'},
+  {id:'comeback',    icon:'🔄', name:'Comeback Kid',      desc:'Double up from under $50'},
+  {id:'crash_3x',    icon:'🚀', name:'To The Moon',       desc:'Cash out at 3x+ on Crash'},
+  {id:'crash_10x',   icon:'🌕', name:'Moonshot',          desc:'Cash out at 10x+ on Crash'},
+  {id:'plinko_big',  icon:'🔵', name:'Drop King',         desc:'Win 10x+ on Plinko'},
+  {id:'mines_5gems', icon:'💎', name:'Diamond Hands',     desc:'Reveal 5 gems in Mines'},
+  {id:'level5',      icon:'⭐', name:'Veteran',           desc:'Reach Level 5'},
+  {id:'level10',     icon:'👑', name:'Legend',            desc:'Reach Level 10'},
+  {id:'bust5',       icon:'💀', name:'Risk Taker',        desc:'Go bust 5 times'},
+];
+
+let unlockedAchs = JSON.parse(localStorage.getItem('rb_achs')||'[]');
+
+function unlockAch(id){
+  if(unlockedAchs.includes(id)) return;
+  const ach = ACHIEVEMENTS.find(a=>a.id===id);
+  if(!ach) return;
+  unlockedAchs.push(id);
+  localStorage.setItem('rb_achs', JSON.stringify(unlockedAchs));
+  // Show popup
+  const popup = document.getElementById('ach-popup');
+  document.getElementById('ach-popup-icon').textContent = ach.icon;
+  document.getElementById('ach-popup-name').textContent = ach.name;
+  document.getElementById('ach-popup-desc').textContent = ach.desc;
+  popup.classList.add('show');
+  setTimeout(()=>popup.classList.remove('show'), 3500);
+}
+
+function checkAchievements(context){
+  const {r, net, betAmt, streak} = context;
+  if(stats.w >= 1) unlockAch('first_win');
+  if(stats.bj >= 1) unlockAch('first_bj');
+  if(streak >= 3) unlockAch('streak3');
+  if(streak >= 5) unlockAch('streak5');
+  if(net >= 500) unlockAch('big_win');
+  if(wag >= 10000) unlockAch('whale');
+  if(bal < 50 && net > 0 && bal >= 100) unlockAch('comeback');
+  if(stats.l >= 5) unlockAch('bust5');
+  const lv = getLevel(xp);
+  if(lv >= 5) unlockAch('level5');
+  if(lv >= 10) unlockAch('level10');
+}
+
+function checkCrashAch(multi){
+  if(multi >= 3) unlockAch('crash_3x');
+  if(multi >= 10) unlockAch('crash_10x');
+}
+
+function checkPlinkoAch(multi){
+  if(multi >= 10) unlockAch('plinko_big');
+}
+
+function checkMinesAch(gems){
+  if(gems >= 5) unlockAch('mines_5gems');
+}
+
+// ════════════════════════════════════════
+//  STATS PAGE RENDER
+// ════════════════════════════════════════
+function renderStatsPage(){
+  const lv = getLevel(xp);
+  const total = stats.w + stats.l + stats.p + stats.bj;
+  const wins = stats.w + stats.bj;
+  const wr = total > 0 ? Math.round(wins/total*100) : 0;
+  const net = bal - 1000;
+
+  // Update stat cards
+  const set = (id,v) => { const e=document.getElementById(id); if(e) e.textContent=v; };
+  set('ss-bal',  '$'+fmt(bal));
+  set('ss-wag',  '$'+fmt(wag));
+  set('ss-pl',   (net>=0?'+':'')+'$'+fmt(net));
+  set('ss-wr',   total>0 ? wr+'%' : '–');
+  set('ss-hands', fmt(total));
+  set('ss-streak', stats.best);
+  set('ss-bj',    stats.bj);
+  set('ss-level',  lv);
+
+  const pl = document.getElementById('ss-pl');
+  if(pl) pl.style.color = net>=0 ? 'var(--green)' : 'var(--red)';
+
+  // Records from localStorage
+  const bigWin  = +(localStorage.getItem('rb_bigwin')||0);
+  const bigLoss = +(localStorage.getItem('rb_bigloss')||0);
+  set('rec-bigwin',   bigWin  ? '+$'+fmt(bigWin)  : '–');
+  set('rec-bigloss',  bigLoss ? '-$'+fmt(bigLoss) : '–');
+  set('rec-streak',   stats.best || '–');
+  set('rec-bj',       stats.bj || '–');
+
+  // Balance line chart (reuse balHistory)
+  drawStatsBalanceChart();
+
+  // Pie chart
+  drawStatsPie(stats.w + stats.bj, stats.l, stats.p);
+
+  // History dots
+  const hd = document.getElementById('stats-hist-dots');
+  if(hd) hd.innerHTML = hist.slice(-40).map(r=>`<div class="hdot ${r}" style="width:8px;height:8px;"></div>`).join('');
+
+  // Achievements
+  renderAchGrid();
+}
+
+function drawStatsBalanceChart(){
+  const canvas = document.getElementById('stats-balance-chart');
+  if(!canvas || !balHistory.length) return;
+  const dpr = window.devicePixelRatio||1;
+  const W = canvas.offsetWidth||300, H = 80;
+  canvas.width=W*dpr; canvas.height=H*dpr;
+  canvas.style.width=W+'px'; canvas.style.height=H+'px';
+  const ctx=canvas.getContext('2d'); ctx.scale(dpr,dpr);
+  const pts=balHistory; if(pts.length<2){ return; }
+  const mn=Math.min(...pts), mx=Math.max(...pts), rng=mx-mn||1;
+  const pad=4;
+  const xs=i=>(pad + i*(W-pad*2)/(pts.length-1));
+  const ys=v=>(H-pad-((v-mn)/rng)*(H-pad*2));
+  const isUp = pts[pts.length-1]>=pts[0];
+  const col = isUp?'34,197,94':'239,68,68';
+  const grad=ctx.createLinearGradient(0,0,0,H);
+  grad.addColorStop(0,`rgba(${col},.25)`); grad.addColorStop(1,`rgba(${col},0)`);
+  ctx.beginPath(); ctx.moveTo(xs(0),H); ctx.lineTo(xs(0),ys(pts[0]));
+  pts.forEach((_,i)=>ctx.lineTo(xs(i),ys(pts[i])));
+  ctx.lineTo(xs(pts.length-1),H); ctx.closePath();
+  ctx.fillStyle=grad; ctx.fill();
+  ctx.beginPath(); ctx.moveTo(xs(0),ys(pts[0]));
+  pts.forEach((_,i)=>ctx.lineTo(xs(i),ys(pts[i])));
+  ctx.strokeStyle=isUp?'#22c55e':'#ef4444'; ctx.lineWidth=2; ctx.lineJoin='round'; ctx.stroke();
+}
+
+function drawStatsPie(wins, losses, pushes){
+  // Replace canvas entirely with an SVG — no DPR/sizing bugs on any device
+  const canvas = document.getElementById('stats-pie-chart');
+  if(!canvas) return;
+
+  const total = wins + losses + pushes;
+  const wr = total > 0 ? Math.round(wins / total * 100) : 0;
+
+  // Build SVG pie using stroke-dasharray trick — dead simple, always correct
+  const R = 40; // radius of donut
+  const C = 2 * Math.PI * R; // circumference
+  const wPct = total > 0 ? wins   / total : 0;
+  const lPct = total > 0 ? losses / total : 0;
+  const pPct = total > 0 ? pushes / total : 0;
+
+  // stroke-dasharray: segment_length, rest_of_circle
+  // stroke-dashoffset: how far to rotate the start point
+  function seg(pct, offset){
+    return `stroke-dasharray="${(pct*C).toFixed(2)} ${C.toFixed(2)}" stroke-dashoffset="${(-offset*C).toFixed(2)}"`;
+  }
+
+  const wOff = 0;
+  const lOff = wPct;
+  const pOff = wPct + lPct;
+
+  const noData = !total;
+
+  const svg = `<svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+    <circle cx="50" cy="50" r="${R}" fill="none" stroke="${noData?'rgba(255,255,255,.06)':'#1f2d3d'}" stroke-width="18"/>
+    ${!noData && wins   ? `<circle cx="50" cy="50" r="${R}" fill="none" stroke="#22c55e" stroke-width="18" ${seg(wPct,wOff)} transform="rotate(-90 50 50)"/>` : ''}
+    ${!noData && losses ? `<circle cx="50" cy="50" r="${R}" fill="none" stroke="#ef4444" stroke-width="18" ${seg(lPct,lOff)} transform="rotate(-90 50 50)"/>` : ''}
+    ${!noData && pushes ? `<circle cx="50" cy="50" r="${R}" fill="none" stroke="#3b82f6" stroke-width="18" ${seg(pPct,pOff)} transform="rotate(-90 50 50)"/>` : ''}
+    <!-- Centre labels -->
+    <text x="50" y="46" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="800" fill="#f1f5f9">${noData ? '–' : wr+'%'}</text>
+    <text x="50" y="59" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" fill="#475569">${noData ? 'No data' : 'win rate'}</text>
+    <!-- Legend -->
+    <circle cx="18" cy="104" r="4" fill="#22c55e"/>
+    <text x="25" y="108" font-family="Inter,sans-serif" font-size="8" fill="#64748b">Win ${total>0?Math.round(wPct*100)+'%':''}</text>
+    <circle cx="52" cy="104" r="4" fill="#ef4444"/>
+    <text x="59" y="108" font-family="Inter,sans-serif" font-size="8" fill="#64748b">Loss ${total>0?Math.round(lPct*100)+'%':''}</text>
+    <circle cx="18" cy="116" r="4" fill="#3b82f6"/>
+    <text x="25" y="120" font-family="Inter,sans-serif" font-size="8" fill="#64748b">Push ${total>0?Math.round(pPct*100)+'%':''}</text>
+  </svg>`;
+
+  // Swap canvas for a div holding the SVG
+  const wrapper = canvas.parentElement;
+  if(!wrapper) return;
+  let svgHolder = wrapper.querySelector('.pie-svg-holder');
+  if(!svgHolder){
+    canvas.style.display = 'none';
+    svgHolder = document.createElement('div');
+    svgHolder.className = 'pie-svg-holder';
+    wrapper.appendChild(svgHolder);
+  }
+  svgHolder.innerHTML = svg;
+}
+
+function renderAchGrid(){
+  const grid=document.getElementById('ach-grid');
+  if(!grid) return;
+  grid.innerHTML = ACHIEVEMENTS.map(a=>{
+    const unlocked=unlockedAchs.includes(a.id);
+    return `<div class="ach-item ${unlocked?'unlocked':'locked'}">
+      <div class="ach-item-icon">${a.icon}</div>
+      <div class="ach-item-name">${a.name}</div>
+      <div class="ach-item-desc">${a.desc}</div>
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════
+//  SHARE / SCREENSHOT CARD
+// ════════════════════════════════════════
+function openShareCard(){
+  const canvas = document.getElementById('share-canvas');
+  const ctx = canvas.getContext('2d');
+  const W=480, H=280;
+  canvas.width=W; canvas.height=H;
+
+  // Background
+  const bg=ctx.createLinearGradient(0,0,W,H);
+  bg.addColorStop(0,'#0a1628'); bg.addColorStop(1,'#111d2e');
+  ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+
+  // Border glow
+  ctx.strokeStyle='rgba(59,130,246,.5)'; ctx.lineWidth=2;
+  roundRectPath(ctx,2,2,W-4,H-4,14); ctx.stroke();
+
+  // Logo
+  ctx.font='bold 20px Inter,sans-serif'; ctx.fillStyle='#f1f5f9'; ctx.textAlign='left'; ctx.textBaseline='top';
+  ctx.fillText('🌧 RainBet', 24, 22);
+  ctx.font='12px Inter,sans-serif'; ctx.fillStyle='#475569';
+  ctx.fillText('Virtual Casino · Free to Play', 24, 48);
+
+  // Divider
+  ctx.strokeStyle='rgba(255,255,255,.08)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(24,72); ctx.lineTo(W-24,72); ctx.stroke();
+
+  // Big balance
+  const net = bal - 1000;
+  const isUp = net >= 0;
+  ctx.font='bold 48px Inter,sans-serif';
+  ctx.fillStyle = isUp ? '#22c55e' : '#ef4444';
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText((isUp?'+':'')+'$'+fmt(net), W/2, 130);
+
+  ctx.font='14px Inter,sans-serif'; ctx.fillStyle='#94a3b8';
+  ctx.fillText('Net Profit · Session', W/2, 164);
+
+  // Stats row
+  const lv=getLevel(xp);
+  const total=stats.w+stats.l+stats.p+stats.bj;
+  const wr=total>0?Math.round((stats.w+stats.bj)/total*100):0;
+  const items=[
+    {lbl:'Balance',  val:'$'+fmt(bal)},
+    {lbl:'Win Rate', val:wr+'%'},
+    {lbl:'Level',    val:lv},
+    {lbl:'BJ Hits',  val:stats.bj},
+  ];
+  ctx.textAlign='center';
+  items.forEach((it,i)=>{
+    const x=60 + i*90;
+    ctx.font='bold 16px Inter,sans-serif'; ctx.fillStyle='#f1f5f9';
+    ctx.fillText(it.val, x, 210);
+    ctx.font='10px Inter,sans-serif'; ctx.fillStyle='#475569';
+    ctx.fillText(it.lbl, x, 228);
+  });
+
+  // Footer
+  ctx.font='11px Inter,sans-serif'; ctx.fillStyle='#334155'; ctx.textAlign='center';
+  ctx.fillText('rainbet.casino · All bets placed with virtual coins', W/2, H-16);
+
+  document.getElementById('share-canvas-wrap').classList.add('show');
+}
+
+function roundRectPath(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y);
+  ctx.arcTo(x+w,y,x+w,y+r,r); ctx.lineTo(x+w,y+h-r);
+  ctx.arcTo(x+w,y+h,x+w-r,y+h,r); ctx.lineTo(x+r,y+h);
+  ctx.arcTo(x,y+h,x,y+h-r,r); ctx.lineTo(x,y+r);
+  ctx.arcTo(x,y,x+r,y,r); ctx.closePath();
+}
+
+function saveShareCard(){
+  const canvas=document.getElementById('share-canvas');
+  const link=document.createElement('a');
+  link.download='rainbet-stats.png';
+  link.href=canvas.toDataURL('image/png');
+  link.click();
+  showToast('📸 Screenshot saved!');
+}
+function closeShareCard(){ document.getElementById('share-canvas-wrap').classList.remove('show'); }
+
+// ════════════════════════════════════════
+//  RECORD TRACKING
+// ════════════════════════════════════════
+function trackRecord(net){
+  if(net > 0){
+    const cur=+(localStorage.getItem('rb_bigwin')||0);
+    if(net>cur) localStorage.setItem('rb_bigwin', net);
+  } else if(net < 0){
+    const cur=+(localStorage.getItem('rb_bigloss')||0);
+    if(Math.abs(net)>cur) localStorage.setItem('rb_bigloss', Math.abs(net));
+  }
+}
+
+// ════════════════════════════════════════
+//  HOTKEYS
+// ════════════════════════════════════════
+document.addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT') return;
+  const active = document.querySelector('.panel.active')?.id;
+  if(active==='panel-bj'){
+    if(e.code==='Space'||e.key==='Enter'){ e.preventDefault(); if(phase==='idle') deal(); }
+    if(e.key==='h'||e.key==='H') hit();
+    if(e.key==='s'||e.key==='S') stand();
+    if(e.key==='d'||e.key==='D') dbl();
+  }
+  if(active==='panel-crash' && (e.code==='Space'||e.key==='Enter')){ e.preventDefault(); crashAction(); }
+});
 
 </script>
 </body>
