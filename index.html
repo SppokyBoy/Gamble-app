@@ -362,7 +362,6 @@ body{
 .bj-bottom{
   flex-shrink:0;
   background:var(--bg2);border-top:1px solid var(--border);
-  overflow:hidden; /* prevent inner overflow bleeding */
 }
 
 .action-row{
@@ -427,7 +426,7 @@ body{
 }
 .bi-sym{font-size:.8rem;color:var(--text3);font-weight:500;}
 .bi-in{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:.9rem;font-weight:700;font-family:'Inter',sans-serif;font-variant-numeric:tabular-nums;min-width:60px;}
-.qb{height:32px;padding:0 9px;border-radius:6px;border:none;background:var(--bg4);color:var(--text2);font-size:.72rem;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;transition:all .12s;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.qb{height:32px;padding:0 9px;border-radius:6px;border:none;background:var(--bg4);color:var(--text2);font-size:.72rem;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;transition:all .12s;touch-action:manipulation;-webkit-tap-highlight-color:transparent;flex-shrink:0;white-space:nowrap;}
 .qb:hover{background:var(--bg5);color:var(--text);}
 .qb:disabled{opacity:.3;cursor:not-allowed;}
 
@@ -437,7 +436,8 @@ body{
   color:#fff;border:none;border-radius:9px;
   font-size:.86rem;font-weight:800;font-family:'Inter',sans-serif;
   cursor:pointer;transition:all .15s;
-  box-shadow:0 2px 12px rgba(59,130,246,.35);flex-shrink:0;
+  box-shadow:0 2px 12px rgba(59,130,246,.35);
+  flex-shrink:0;white-space:nowrap;
   touch-action:manipulation;-webkit-tap-highlight-color:transparent;
 }
 .btn-place:hover{filter:brightness(1.1);transform:translateY(-1px);}
@@ -518,12 +518,12 @@ body{
   .chips-bet-row{padding:6px 10px 4px;gap:6px;}
 
   /* ── Bet amount + deal row ── */
-  .bet-action-row{padding:0 10px 10px;gap:6px;}
-  .bet-group{min-width:0;max-width:none;flex:1;}
-  .bi-in{font-size:.82rem;}
-  .btn-place{padding:0 14px;font-size:.8rem;height:40px;flex-shrink:0;white-space:nowrap;}
+  .bet-action-row{padding:0 8px 10px;gap:5px;}
+  .bet-group{min-width:110px;flex:1;}
+  .bi-in{font-size:.8rem;}
+  .btn-place{padding:0 12px;font-size:.78rem;height:38px;}
   .btn-auto{display:none;}
-  .qb{padding:0 6px;font-size:.65rem;height:28px;}
+  .qb{padding:0 5px;font-size:.63rem;height:26px;}
 
   /* ── Crash ── */
   .crash-players{display:none;}
@@ -787,13 +787,17 @@ body{
 .bet-action-row{
   display:flex;
   align-items:center;
-  gap:8px;
-  padding:0 16px 10px;
+  gap:6px;
+  padding:0 12px 10px;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  flex-wrap:nowrap;
 }
+.bet-action-row::-webkit-scrollbar{display:none;}
 .bet-action-row .bet-group{
   flex:1;
-  min-width:0;     /* allow shrink below min-width */
-  max-width:none;  /* fill available space */
+  min-width:120px;
+  max-width:none;
 }
 /* chips row inside bet-bar: no bottom padding — action row handles it */
 .bet-bar .chips-bet-row{
