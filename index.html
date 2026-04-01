@@ -1540,6 +1540,7 @@ body{
       <!-- Bottom bar -->
       <div class="bj-bottom">
         <div class="bet-bar">
+          <!-- Row 1: chips + bomb selector -->
           <div class="chips-bet-row">
             <div class="chip-reset" onclick="minesClearBet()">↺</div>
             <div class="chip c1"   onclick="minesAddBet(1)">1</div>
@@ -1547,7 +1548,20 @@ body{
             <div class="chip c25"  onclick="minesAddBet(25)">25</div>
             <div class="chip c100" onclick="minesAddBet(100)">100</div>
             <div class="chip c200" onclick="minesAddBet(200)">200</div>
+            <div class="mines-bomb-sel" style="flex-shrink:0;margin-left:4px;">
+              <span style="font-size:.85rem;">💣</span>
+              <select id="mines-bomb-count" onchange="minesSetBombs(this.value)">
+                <option value="1">1</option>
+                <option value="3" selected>3</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="24">24</option>
+              </select>
+            </div>
           </div>
+          <!-- Row 2: amount + adjusters + start -->
           <div class="bet-action-row">
             <div class="bet-group">
               <span class="bi-sym">$</span>
@@ -1557,18 +1571,6 @@ body{
                 <button class="qb" onclick="minesAdjBet(2)">2×</button>
                 <button class="qb" onclick="minesMaxBet()">Max</button>
               </div>
-            </div>
-            <div class="mines-bomb-sel">
-              <span style="font-size:.9rem;">💣</span>
-              <select id="mines-bomb-count" onchange="minesSetBombs(this.value)">
-                <option value="1">1 mine</option>
-                <option value="3" selected>3 mines</option>
-                <option value="5">5 mines</option>
-                <option value="10">10 mines</option>
-                <option value="15">15 mines</option>
-                <option value="20">20 mines</option>
-                <option value="24">24 mines</option>
-              </select>
             </div>
             <button class="btn-place" id="btn-mines-deal" onclick="minesStart()">Start Game</button>
           </div>
